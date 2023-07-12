@@ -5,8 +5,10 @@ import com.cobo.custody.api.client.CoboMPCApiRestClient;
 import com.cobo.custody.api.client.config.Env;
 import com.cobo.custody.api.client.domain.ApiResponse;
 import com.cobo.custody.api.client.domain.account.*;
+import com.cobo.custody.api.client.domain.asset.MPCNftCollections;
 import com.cobo.custody.api.client.domain.transaction.*;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import static com.cobo.custody.api.client.impl.CoboApiServiceGenerator.createService;
@@ -27,6 +29,16 @@ public class CoboMPCApiRestClientImpl implements CoboMPCApiRestClient {
     @Override
     public ApiResponse<MPCCoins> getSupportedCoins(String chainCode) {
         return executeSync(coboMPCApiService.getSupportedCoins(chainCode));
+    }
+
+    @Override
+    public ApiResponse<MPCNftCollections> getSupportedNftCollections(String chainCode) {
+        return executeSync(coboMPCApiService.getSupportedNftCollections(chainCode));
+    }
+
+    @Override
+    public ApiResponse<MPCWalletCoins> getWalletSupportedCoins() {
+        return executeSync(coboMPCApiService.getWalletSupportedCoins());
     }
 
     @Override
@@ -53,8 +65,8 @@ public class CoboMPCApiRestClientImpl implements CoboMPCApiRestClient {
         return executeSync(coboMPCApiService.getBalance(address, chainCode, coin));
     }
 
-    public ApiResponse<MPCListBalances> listBalances(String coin, Integer pageIndex, Integer pageLength) {
-        return executeSync(coboMPCApiService.listBalances(coin, pageIndex, pageLength));
+    public ApiResponse<MPCListBalances> listBalances(String coin, Integer pageIndex, Integer pageLength, String chainCode) {
+        return executeSync(coboMPCApiService.listBalances(coin, pageIndex, pageLength, chainCode));
     }
 
     public ApiResponse<MPCListSpendable> listSpendable(String coin, String address) {
@@ -62,21 +74,30 @@ public class CoboMPCApiRestClientImpl implements CoboMPCApiRestClient {
     }
 
     @Override
-    public ApiResponse<MPCPostTransaction> createTransaction(String coin, String requestId, String fromAddr, String toAddr, BigInteger amount,
-                                                             String toAddressDetails, BigInteger fee, BigInteger gasPrice, BigInteger gasLimit,
-                                                             Integer operation, String extraParameters) {
-        return executeSync(coboMPCApiService.createTransaction(coin, requestId, fromAddr, toAddr, amount,
-                toAddressDetails, fee, gasPrice, gasLimit, operation, extraParameters));
+    public ApiResponse<MPCPostTransaction> createTransaction(String coin, String requestId, BigInteger amount, String fromAddr, String toAddr,
+                                                             String toAddressDetails, BigDecimal fee, BigInteger gasPrice, BigInteger gasLimit,
+                                                             Integer operation, String extraParameters, BigInteger maxFee, BigInteger maxPriorityFee,
+                                                             BigInteger feeAmount) {
+        return executeSync(coboMPCApiService.createTransaction(coin, requestId, amount, fromAddr, toAddr,
+                toAddressDetails, fee, gasPrice, gasLimit, operation, extraParameters, maxFee, maxPriorityFee, feeAmount));
     }
 
     @Override
-    public ApiResponse<MPCPostTransaction> speedUpTransaction(String coboId, String requestId, BigInteger fee, BigInteger gasPrice, BigInteger gasLimit) {
-        return executeSync(coboMPCApiService.speedUpTransaction(coboId, requestId, fee, gasPrice, gasLimit));
+    public ApiResponse<MPCPostTransaction> signMessage(String chainCode, String requestId, String fromAddr, Integer signVersion,
+                                                       String extraParameters) {
+        return executeSync(coboMPCApiService.signMessage(chainCode, requestId, fromAddr, signVersion, extraParameters));
     }
 
     @Override
-    public ApiResponse<MPCPostTransaction> dropTransaction(String coboId, String requestId, BigInteger fee, BigInteger gasPrice, BigInteger gasLimit) {
-        return executeSync(coboMPCApiService.dropTransaction(coboId, requestId, fee, gasPrice, gasLimit));
+    public ApiResponse<MPCPostTransaction> speedUpTransaction(String coboId, String requestId, BigDecimal fee,
+                                                              BigInteger gasPrice, BigInteger gasLimit, BigInteger feeAmount) {
+        return executeSync(coboMPCApiService.speedUpTransaction(coboId, requestId, fee, gasPrice, gasLimit, feeAmount));
+    }
+
+    @Override
+    public ApiResponse<MPCPostTransaction> dropTransaction(String coboId, String requestId, BigDecimal fee,
+                                                           BigInteger gasPrice, BigInteger gasLimit, BigInteger feeAmount) {
+        return executeSync(coboMPCApiService.dropTransaction(coboId, requestId, fee, gasPrice, gasLimit, feeAmount));
     }
 
     @Override
@@ -103,12 +124,21 @@ public class CoboMPCApiRestClientImpl implements CoboMPCApiRestClient {
     }
 
     @Override
-    public ApiResponse<EstimateFeeDetails> estimateFee(String coin, BigInteger amount, String address, String replaceCoboId) {
-        return executeSync(coboMPCApiService.estimateFee(coin, amount, address, replaceCoboId));
+    public ApiResponse<EstimateFeeDetails> estimateFee(String coin, BigInteger amount, String address, String replaceCoboId,
+                                                       String fromAddress, String toAddressDetails,
+                                                       BigDecimal fee, BigInteger gasPrice, BigInteger gasLimit,
+                                                       String extraParameters) {
+        return executeSync(coboMPCApiService.estimateFee(coin, amount, address, replaceCoboId, fromAddress, toAddressDetails,
+                fee, gasPrice, gasLimit, extraParameters));
     }
 
     @Override
     public ApiResponse<MPCTssNodeRequests> listTssNodeRequests(Integer requestType, Integer status) {
         return executeSync(coboMPCApiService.listTssNodeRequests(requestType, status));
+    }
+
+    @Override
+    public ApiResponse<Void> retryDoubleCheck(String requestId) {
+        return executeSync(coboMPCApiService.retryDoubleCheck(requestId));
     }
 }

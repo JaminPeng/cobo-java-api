@@ -2,7 +2,7 @@ package com.cobo.custody.api.client.domain.account;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Web3Coin {
+public class StandardCoin {
     private String coin;
     @JsonProperty(value = "display_code")
     private String displayCode;
@@ -12,11 +12,10 @@ public class Web3Coin {
     private boolean canDeposit;
     @JsonProperty(value = "can_withdraw")
     private boolean canWithdraw;
+    @JsonProperty(value = "require_memo")
+    private boolean requireMemo;
     @JsonProperty(value = "minimum_deposit_threshold")
     private String minimumDepositThreshold;
-
-    @JsonProperty(value = "confirming_threshold")
-    private Integer confirmingThreshold;
 
     public String getCoin() {
         return coin;
@@ -66,20 +65,20 @@ public class Web3Coin {
         this.canWithdraw = canWithdraw;
     }
 
+    public boolean isRequireMemo() {
+        return requireMemo;
+    }
+
+    public void setRequireMemo(boolean requireMemo) {
+        this.requireMemo = requireMemo;
+    }
+
     public String getMinimumDepositThreshold() {
         return minimumDepositThreshold;
     }
 
     public void setMinimumDepositThreshold(String minimumDepositThreshold) {
         this.minimumDepositThreshold = minimumDepositThreshold;
-    }
-
-    public Integer getConfirmingThreshold() {
-        return confirmingThreshold;
-    }
-
-    public void setConfirmingThreshold(Integer confirmingThreshold) {
-        this.confirmingThreshold = confirmingThreshold;
     }
 
     @Override
@@ -92,7 +91,7 @@ public class Web3Coin {
                 ", canDeposit=" + canDeposit +
                 ", canWithdraw=" + canWithdraw +
                 ", minimumDepositThreshold='" + minimumDepositThreshold + '\'' +
-                ", confirmingThreshold='" + confirmingThreshold + '\'' +
+                ", requireMemo='" + requireMemo + '\'' +
                 '}';
     }
 }

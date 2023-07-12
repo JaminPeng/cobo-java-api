@@ -1,7 +1,9 @@
 package com.cobo.custody.api.client.impl;
 
 import com.cobo.custody.api.client.domain.ApiResponse;
-import com.cobo.custody.api.client.domain.account.*;
+import com.cobo.custody.api.client.domain.account.Web3Addresses;
+import com.cobo.custody.api.client.domain.account.Web3Chains;
+import com.cobo.custody.api.client.domain.account.Web3Coins;
 import com.cobo.custody.api.client.domain.asset.Web3NftCollections;
 import com.cobo.custody.api.client.domain.asset.Web3WalletAsset;
 import com.cobo.custody.api.client.domain.asset.Web3WalletNftDetail;
@@ -69,20 +71,21 @@ public interface CoboWeb3ApiService {
     @FormUrlEncoded
     @POST("/v1/custody/web3_contract/")
     Call<ApiResponse<Void>> web3Contract(@Field("chain_code") String chainCode,
-                                     @Field("request_id") String requestId,
-                                     @Field("wallet_addr") String walletAddr,
-                                     @Field("contract_addr") String contractAddr,
-                                     @Field("method_id") String methodId,
-                                     @Field("method_name") String methodName,
-                                     @Field("args") String args,
-                                     @Field("amount") BigInteger amount);
+                                         @Field("request_id") String requestId,
+                                         @Field("wallet_addr") String walletAddr,
+                                         @Field("contract_addr") String contractAddr,
+                                         @Field("method_id") String methodId,
+                                         @Field("method_name") String methodName,
+                                         @Field("args") String args,
+                                         @Field("amount") BigInteger amount,
+                                         @Field("gas_limit") BigInteger gasLimit);
 
     @GET("/v1/custody/web3_get_contract_transaction/")
     Call<ApiResponse<Web3TransactionInfo>> getWeb3ContractTransaction(@Query("request_id") String requestId);
 
     @GET("/v1/custody/web3_list_wallet_transactions/")
     Call<ApiResponse<Web3Transactions>> listWeb3WalletTransactions(@Query("address") String address,
-                                                                   @Query("coin") String coin,
+                                                                   @Query("chain_code") String chainCode,
                                                                    @Query("max_id") String max_id,
                                                                    @Query("min_id") String min_id,
                                                                    @Query("limit") int limit);

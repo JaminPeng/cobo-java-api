@@ -161,7 +161,7 @@ public class CoboWeb3ApiRestClientImplTest {
         String args = "[\"0x040149e133077aebcfe4594e00638135eb4bc77f\", 1]";
         BigInteger amount = new BigInteger("1");
         ApiResponse<Void> res = web3Client.contract(chainCode, requestId, walletAddr,
-                contractAddr, methodId, methodName, args, amount);
+                contractAddr, methodId, methodName, args, amount, null);
         System.out.println(res);
         assertTrue(res.isSuccess());
     }
@@ -177,11 +177,11 @@ public class CoboWeb3ApiRestClientImplTest {
     @Test
     public void testListWalletTransactions() {
         String address = "0xd2176409a1ac767824921e45b7ee300745cb1e3f";
-        String coin = "ETH";
+        String chainCode = "ETH";
         String max_id = null;
         String min_id = "20221009161459000368403000001228";
         int limit = 10;
-        ApiResponse<Web3Transactions> res = web3Client.listWalletTransactions(address, coin, max_id, min_id, limit);
+        ApiResponse<Web3Transactions> res = web3Client.listWalletTransactions(address, chainCode, max_id, min_id, limit);
         System.out.println(res);
         assertTrue(res.isSuccess());
     }

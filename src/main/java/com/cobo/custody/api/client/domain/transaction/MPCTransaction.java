@@ -3,8 +3,6 @@ package com.cobo.custody.api.client.domain.transaction;
 import com.cobo.custody.api.client.domain.account.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 public class MPCTransaction {
     @JsonProperty(value = "cobo_id")
     private String coboId;
@@ -66,6 +64,50 @@ public class MPCTransaction {
     private Long updatedTime;
     @JsonProperty(value = "failed_reason")
     private String failedReason;
+
+    @JsonProperty(value = "to_address_details")
+    private String toAddressDetails;
+
+    @JsonProperty(value = "approval_process")
+    private String approvalProcess;
+
+    @Override
+    public String toString() {
+        return "MPCTransaction{" +
+                "coboId='" + coboId + '\'' +
+                ", requestId='" + requestId + '\'' +
+                ", status=" + status +
+                ", coinDetail=" + coinDetail +
+                ", amountDetail=" + amountDetail +
+                ", feeDetail=" + feeDetail +
+                ", sourceAddresses='" + sourceAddresses + '\'' +
+                ", fromAddress='" + fromAddress + '\'' +
+                ", toAddress='" + toAddress + '\'' +
+                ", txHash='" + txHash + '\'' +
+                ", voutN=" + voutN +
+                ", nonce=" + nonce +
+                ", confirmedNumber=" + confirmedNumber +
+                ", replaceCoboId='" + replaceCoboId + '\'' +
+                ", transactionType=" + transactionType +
+                ", operation=" + operation +
+                ", blockDetail=" + blockDetail +
+                ", txDetail=" + txDetail +
+                ", extraParameters='" + extraParameters + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedTime=" + updatedTime +
+                ", failedReason='" + failedReason + '\'' +
+                ", toAddressDetails='" + toAddressDetails + '\'' +
+                ", approvalProcess='" + approvalProcess + '\'' +
+                '}';
+    }
+
+    public String getApprovalProcess() {
+        return approvalProcess;
+    }
+
+    public void setApprovalProcess(String approvalProcess) {
+        this.approvalProcess = approvalProcess;
+    }
 
     public String getCoboId() {
         return coboId;
@@ -243,31 +285,12 @@ public class MPCTransaction {
         this.failedReason = failedReason;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "coboId='" + coboId + '\'' +
-                ", requestId='" + requestId + '\'' +
-                ", status='" + status + '\'' +
-                ", coinDetail='" + coinDetail + '\'' +
-                ", amountDetail='" + amountDetail + '\'' +
-                ", feeDetail='" + feeDetail + '\'' +
-                ", sourceAddresses='" + sourceAddresses + '\'' +
-                ", fromAddress='" + fromAddress + '\'' +
-                ", toAddress='" + toAddress + '\'' +
-                ", txHash='" + txHash + '\'' +
-                ", voutN='" + voutN + '\'' +
-                ", nonce='" + nonce + '\'' +
-                ", confirmedNumber='" + confirmedNumber + '\'' +
-                ", replaceCoboId='" + replaceCoboId + '\'' +
-                ", transactionType='" + transactionType + '\'' +
-                ", operation='" + operation + '\'' +
-                ", blockDetail='" + blockDetail + '\'' +
-                ", txDetail='" + txDetail + '\'' +
-                ", extraParameters='" + extraParameters + '\'' +
-                ", createdTime='" + createdTime + '\'' +
-                ", updatedTime='" + updatedTime + '\'' +
-                ", failedReason='" + failedReason + '\'' +
-                '}';
+    public String getToAddressDetails() {
+        return toAddressDetails;
     }
+
+    public void setToAddressDetails(String toAddressDetails) {
+        this.toAddressDetails = toAddressDetails;
+    }
+
 }

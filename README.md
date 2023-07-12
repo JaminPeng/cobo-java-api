@@ -80,7 +80,7 @@ gradle:
 
 ```
 dependencies {
-    implementation 'com.github.CoboCustody:cobo-java-api:v0.43'
+    implementation 'com.github.CoboGlobal:cobo-java-api:v0.56'
 }
 ```
 
@@ -88,9 +88,9 @@ maven:
 
 ```
 <dependency>
-    <groupId>com.github.CoboCustody</groupId>
+    <groupId>com.github.CoboGlobal</groupId>
     <artifactId>cobo-java-api</artifactId>
-    <version>v0.43</version>
+    <version>v0.56</version>
 </dependency>
 ```
 
@@ -111,8 +111,8 @@ maven:
 import com.cobo.custody.api.client.impl.LocalSigner;
 
 String[] key = LocalSigner.generateKeyPair();
-Stirng secretKey = key[0];
-Stirng apiKey = key[1];
+String secretKey = key[0];
+String apiKey = key[1];
 ```
 Please refer to the link [link](https://doc.custody.cobo.com/en.html#api-authentication) for how to use apiKey
 

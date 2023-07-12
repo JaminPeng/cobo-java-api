@@ -175,6 +175,13 @@ public interface CoboApiRestClient {
     ApiResponse<Transaction> getPendingTransaction(String id);
 
     /***
+     * Get all withdraw transaction Details
+     * @param requestIds
+     * @return transaction detail
+     */
+    ApiResponse<List<Transaction>> getTransactionsByRequestIds(String requestIds);
+
+    /***
      * Get Transaction History
      * @param coin Coin code (Does not return all currencies)
      * @param side Deposit/withdrawal
@@ -296,5 +303,9 @@ public interface CoboApiRestClient {
 
     ApiResponse<TradingTransfer> getTradingTransferInfo(String requestId);
 
-
+    /***
+     * Check account details
+     * @return account details
+     */
+    ApiResponse<List<StandardCoin>> getSupportedCoins();
 }

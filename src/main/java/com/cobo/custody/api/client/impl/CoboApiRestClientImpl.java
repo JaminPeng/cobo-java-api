@@ -131,6 +131,11 @@ public class CoboApiRestClientImpl implements CoboApiRestClient {
     }
 
     @Override
+    public ApiResponse<List<Transaction>> getTransactionsByRequestIds(String requestIds) {
+        return executeSync(coboApiService.getTransactionsByRequestIds(requestIds));
+    }
+
+    @Override
     public ApiResponse<List<Transaction>> getTransactionHistory(String coin, Side side, String address, String maxId, String minId, int limit, long beginTime, long endTime, String includeFinancial) {
         return executeSync(coboApiService.getTransactionHistory(coin, side.getValue(), address, maxId, minId, intToString(limit), longToString(beginTime), longToString(endTime), includeFinancial));
     }
@@ -213,6 +218,11 @@ public class CoboApiRestClientImpl implements CoboApiRestClient {
     @Override
     public ApiResponse<TradingTransfer> getTradingTransferInfo(String requestId) {
         return executeSync(coboApiService.getTradingTransfer(requestId));
+    }
+
+    @Override
+    public ApiResponse<List<StandardCoin>> getSupportedCoins() {
+        return executeSync(coboApiService.getSupportedCoins());
     }
 
     private String intToString(int num) {

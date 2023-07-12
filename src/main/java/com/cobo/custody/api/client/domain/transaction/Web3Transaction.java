@@ -1,5 +1,6 @@
 package com.cobo.custody.api.client.domain.transaction;
 
+import com.cobo.custody.api.client.domain.account.Web3Fee;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -13,8 +14,10 @@ public class Web3Transaction {
     private Integer status;
     @JsonProperty(value = "chain_code")
     private String chainCode;
-    private String coin;
     private List<Web3Token> tokens;
+
+    @JsonProperty(value = "fee_detail")
+    private Web3Fee feeDetail;
 
     public String getId() {
         return id;
@@ -56,20 +59,20 @@ public class Web3Transaction {
         this.chainCode = chainCode;
     }
 
-    public String getCoin() {
-        return coin;
-    }
-
-    public void setCoin(String coin) {
-        this.coin = coin;
-    }
-
     public List<Web3Token> getTokens() {
         return tokens;
     }
 
     public void setTokens(List<Web3Token> tokens) {
         this.tokens = tokens;
+    }
+
+    public Web3Fee getFeeDetail() {
+        return feeDetail;
+    }
+
+    public void setFeeDetail(Web3Fee feeDetail) {
+        this.feeDetail = feeDetail;
     }
 
     @Override
@@ -80,8 +83,8 @@ public class Web3Transaction {
                 ", create_time='" + createTime + '\'' +
                 ", status='" + status + '\'' +
                 ", chain_code='" + chainCode + '\'' +
-                ", coin='" + coin + '\'' +
                 ", tokens='" + tokens + '\'' +
+                ", feeDetail='" + feeDetail + '\'' +
                 '}';
     }
 }

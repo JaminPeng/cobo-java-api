@@ -2,12 +2,11 @@ package com.cobo.custody.api.client.domain.account;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class MPCFee {
+public class Web3Fee {
     @JsonProperty(value = "fee_coin_detail")
-    private MPCCoin feeCoinDetail;
+    private Web3Coin feeCoinDetail;
     @JsonProperty(value = "gas_price")
     private String gasPrice;
     @JsonProperty(value = "gas_limit")
@@ -15,14 +14,11 @@ public class MPCFee {
     @JsonProperty(value = "fee_used")
     private String feeUsed;
 
-    @JsonProperty(value = "fee")
-    private BigDecimal fee;
-
-    public MPCCoin getFeeCoinDetail() {
+    public Web3Coin getFeeCoinDetail() {
         return feeCoinDetail;
     }
 
-    public void setFeeCoinDetail(MPCCoin feeCoinDetail) {
+    public void setFeeCoinDetail(Web3Coin feeCoinDetail) {
         this.feeCoinDetail = feeCoinDetail;
     }
 
@@ -50,14 +46,6 @@ public class MPCFee {
         this.feeUsed = feeUsed;
     }
 
-    public BigDecimal getFee() {
-        return fee;
-    }
-
-    public void setFee(BigDecimal fee) {
-        this.fee = fee;
-    }
-
     @Override
     public String toString() {
         return "{" +
@@ -65,7 +53,6 @@ public class MPCFee {
                 ", gasPrice='" + gasPrice + '\'' +
                 ", gasLimit='" + gasLimit + '\'' +
                 ", feeUsed='" + feeUsed + '\'' +
-                ", fee='" + fee + '\'' +
                 '}';
     }
 }

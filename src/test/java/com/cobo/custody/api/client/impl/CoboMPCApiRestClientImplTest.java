@@ -10,8 +10,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CoboMPCApiRestClientImplTest {
@@ -40,9 +42,16 @@ public class CoboMPCApiRestClientImplTest {
     }
 
     @Test
-    public void testgetSupportedCoins() {
+    public void testGetSupportedCoins() {
         String chainCode = "GETH";
         ApiResponse<MPCCoins> res = mpcClient.getSupportedCoins(chainCode);
+        System.out.println(res.getResult());
+        assertTrue(res.isSuccess());
+    }
+
+    @Test
+    public void testGetWalletSupportedCoins() {
+        ApiResponse<MPCWalletCoins> res = mpcClient.getWalletSupportedCoins();
         System.out.println(res.getResult());
         assertTrue(res.isSuccess());
     }
@@ -92,9 +101,10 @@ public class CoboMPCApiRestClientImplTest {
     @Test
     public void testListBalances() {
         String coin = "GETH";
+        String chainCode = "GETH";
         Integer pageIndex = 0;
         Integer pageLength = 50;
-        ApiResponse<MPCListBalances> res = mpcClient.listBalances(coin, pageIndex, pageLength);
+        ApiResponse<MPCListBalances> res = mpcClient.listBalances(coin, pageIndex, pageLength, chainCode);
         System.out.println(res.getResult());
         assertTrue(res.isSuccess());
     }
@@ -107,13 +117,13 @@ public class CoboMPCApiRestClientImplTest {
         String toAddr = "0xEEACb7a5e53600c144C0b9839A834bb4b39E540c";
         BigInteger amount = new BigInteger("10");
         String toAddressDetails = null;
-        BigInteger fee = null;
+        BigDecimal fee = null;
         BigInteger gasPrice = null;
         BigInteger gasLimit = null;
         Integer operation = null;
         String extraParameters = null;
-        ApiResponse<MPCPostTransaction> res = mpcClient.createTransaction(coin, requestId, fromAddr, toAddr, amount,
-                toAddressDetails, fee, gasPrice, gasLimit, operation, extraParameters);
+        ApiResponse<MPCPostTransaction> res = mpcClient.createTransaction(coin, requestId, amount, fromAddr, toAddr,
+                toAddressDetails, fee, gasPrice, gasLimit, operation, extraParameters, null, null, null);
         System.out.println(res.getResult());
         assertTrue(res.isSuccess());
     }
@@ -177,8 +187,17 @@ public class CoboMPCApiRestClientImplTest {
         String coin = "GETH";
         BigInteger amount = new BigInteger("10000");
         String address = "0xEEACb7a5e53600c144C0b9839A834bb4b39E540c";
-        ApiResponse<EstimateFeeDetails> res = mpcClient.estimateFee(coin, amount, address, null);
+        ApiResponse<EstimateFeeDetails> res = mpcClient.estimateFee(coin, amount, address, null,
+                null, null, null, null, null, null);
         System.out.println(res.getResult());
         assertTrue(res.isSuccess());
+    }
+
+    @Test
+    public void testRetryDoubleCheck() {
+        String requestId = "123";
+        ApiResponse<Void> res = mpcClient.retryDoubleCheck(requestId);
+        System.out.println(res);
+        assertFalse(res.isSuccess());
     }
 }
